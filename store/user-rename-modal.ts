@@ -2,19 +2,19 @@ import { create } from 'zustand';
 
 const defaultValues = { id: '', title: '' };
 
-interface IrenameModal {
+interface IRenameModal {
    isOpen: boolean;
    initialValues: typeof defaultValues;
    onOpen: (id: string, title: string) => void;
    onClose: () => void;
 }
 
-export const useRenameModal = create<IrenameModal>((set) => ({
+export const useRenameModal = create<IRenameModal>((set) => ({
    isOpen: false,
    onOpen: (id, title) =>
       set({
-         isOpen: false,
-         initialValues: defaultValues,
+         isOpen: true,
+         initialValues: { id, title },
       }),
    onClose: () =>
       set({
