@@ -15,7 +15,7 @@ export const Toolbar = () => {
    );
 };
 
-Toolbar.Skeleton = function ParticipantsSkeleton() {
+export const ToolbarSkeleton = () => {
    return (
       <div className='absolute top-[50vh] -translate-y-[50%] left-2 flex flex-col gap-y-4 bg-white h-[360px] w-[52px] shadow-md rounded-md' />
    );
