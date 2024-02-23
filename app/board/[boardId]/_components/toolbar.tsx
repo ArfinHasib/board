@@ -87,17 +87,17 @@ export const Toolbar = ({
                }
             />
             <ToolButton
-               label='Elipse'
+               label='Ellipse'
                icon={Circle}
                onClick={() =>
                   setCanvasState({
                      mode: CanvasMode.Inserting,
-                     layerType: LayerType.Elipse,
+                     layerType: LayerType.Ellipse,
                   })
                }
                isActive={
                   canvasState.mode === CanvasMode.Inserting &&
-                  canvasState.layerType === LayerType.Elipse
+                  canvasState.layerType === LayerType.Ellipse
                }
             />
             <ToolButton

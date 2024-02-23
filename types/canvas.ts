@@ -11,7 +11,7 @@ export type Camera = {
 
 export enum LayerType {
    Rectangle,
-   Elipse,
+   Ellipse,
    Path,
    Text,
    Note,
@@ -24,17 +24,17 @@ export type RectangleLayer = {
    height: number;
    width: number;
    fill: Color;
-   value?: number;
+   value?: string;
 };
 
-export type ElipseLayer = {
-   type: LayerType.Elipse;
+export type EllipseLayer = {
+   type: LayerType.Ellipse;
    x: number;
    y: number;
    height: number;
    width: number;
    fill: Color;
-   value?: number;
+   value?: string;
 };
 
 export type PathLayer = {
@@ -44,8 +44,8 @@ export type PathLayer = {
    height: number;
    width: number;
    fill: Color;
-   points: [][];
-   value?: number;
+   points: number[][];
+   value?: string;
 };
 
 export type TextLayer = {
@@ -55,7 +55,7 @@ export type TextLayer = {
    height: number;
    width: number;
    fill: Color;
-   value?: number;
+   value?: string;
 };
 
 export type NoteLayer = {
@@ -65,7 +65,7 @@ export type NoteLayer = {
    height: number;
    width: number;
    fill: Color;
-   value?: number;
+   value?: string;
 };
 
 export type Point = {
@@ -98,14 +98,15 @@ export type CanvasState =
      }
    | {
         mode: CanvasMode.Translating;
+        current: Point;
      }
    | {
         mode: CanvasMode.Inserting;
         layerType:
-           | LayerType.Elipse
+           | LayerType.Ellipse
            | LayerType.Rectangle
-           | LayerType.Note
-           | LayerType.Text;
+           | LayerType.Text
+           | LayerType.Note;
      }
    | {
         mode: CanvasMode.Pencil;
@@ -116,11 +117,8 @@ export type CanvasState =
      }
    | {
         mode: CanvasMode.Resizing;
-        initalBounds: XYWH;
+        initialBounds: XYWH;
         corner: Side;
-     }
-   | {
-        mode: CanvasMode.Resizing;
      };
 
 export enum CanvasMode {
@@ -135,7 +133,7 @@ export enum CanvasMode {
 
 export type Layer =
    | RectangleLayer
-   | ElipseLayer
+   | EllipseLayer
    | PathLayer
    | TextLayer
    | NoteLayer;
