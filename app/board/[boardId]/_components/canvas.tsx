@@ -30,6 +30,7 @@ import { CursorsPresence } from './cursors-presence';
 import {
    connectionIdToColor,
    findIntersectingLayersWithRectangle,
+   penPointsToPathLayer,
    pointerEventToCanvasPoint,
    resizeBounds,
 } from '@/lib/utils';
@@ -190,19 +191,34 @@ export const Canvas = ({ boardId }: CanvasProps) => {
       [canvasState.mode]
    );
 
-   const insertPath = useMutation(({ storage, self, setMyPresence }) => {
-      const liveLayers = storage.get('layers');
-      const { pencilDraft } = self.presence;
+   const insertPath = useMutation(
+      ({ storage, self, setMyPresence }) => {
+         const liveLayers = storage.get('layers');
+         const { pencilDraft } = self.presence;
 
-      if (
-         pencilDraft == null ||
-         pencilDraft.length < 2 ||
-         liveLayers.size >= MAX_LAYERS
-      ) {
+         if (
+            pencilDraft == null ||
+            pencilDraft.length < 2 ||
+            liveLayers.size >= MAX_LAYERS
+         ) {
+            setMyPresence({ pencilDraft: null });
+            return;
+         }
+
+         const id = nanoid();
+         liveLayers.set(
+            id,
+            new LiveObject(penPointsToPathLayer(pencilDraft, lastUsedColor))
+         );
+
+         const liveLayerIds = storage.get('layersIds');
+         liveLayerIds.push(id);
+
          setMyPresence({ pencilDraft: null });
-         return;
-      }
-   }, []);
+         setCanvasState({ mode: CanvasMode.Pencil });
+      },
+      [lastUsedColor]
+   );
 
    const startDrawing = useMutation(
       ({ setMyPresence }, point: Point, pressure: number) => {
