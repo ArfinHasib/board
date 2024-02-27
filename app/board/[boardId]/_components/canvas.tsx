@@ -192,7 +192,7 @@ export const Canvas = ({ boardId }: CanvasProps) => {
 
    const insertPath = useMutation(({ storage, self, setMyPresence }) => {
       const liveLayers = storage.get('layers');
-      const pencilDraft = self.presence;
+      const { pencilDraft } = self.presence;
 
       if (
          pencilDraft == null ||
